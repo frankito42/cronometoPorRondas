@@ -30,31 +30,61 @@
       justify-content: center;
       flex-direction: column;
     }
+    .inputXd{
+      outline: none;
+      padding: 2%;
+      color:white;
+      width: 100%;
+      font-size: 300%;
+      background: black;
+      border-radius: 5px;
+      border: 0px;
+      text-align: center;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+        }
+        .btnActived:hover{
+          color: white !important;
+        }
   </style>
 </head>
 <body>
 
     <div class="container">
-      <h1 id="rondas">asdasdasd</h1>
-      <div id="temporizador">00:00</div>
-      <div>
-        <input type="number" name="" id="">
-        <input type="number" name="" id="">
+      <h1 id="rondas">Rondas</h1>
+      <div style="color: white;" id="temporizador">00:00</div>
+    </div>
+
+    <div style="width: 20%;background: #252525;border-radius: 5px;padding: 1%;position: fixed;top: 1%;">
+      <div style="display: flex; width: 100%;">
+        <input min="1" value="10" class="inputXd" type="number" name="" id="inicio">
+        <span style="font-size: 300%;">:</span>
+        <input min="1" value="1" class="inputXd" type="number" name="" id="descanso">
       </div>
-    
-    <div>
+      <hr>
+      <div style="display: flex; width: 100%;">
+        <button onclick="iniciar()" class="btnActived" style="width: 50%;background: green;font-size: 150%;padding: 2%;border: 0px;border-radius: 5px;color: #252525;cursor: pointer;">Iniciar</button>
+        <button onclick="detener()" class="btnActived" style="width: 50%;background: red;font-size: 150%;padding: 2%;border: 0px;border-radius: 5px;color: #252525;cursor: pointer;">Detener</button>
+      </div>
+      
+    </div>
  
 
   <script>
     let temporizador;
-    let duracionRonda = 20; // segundos
-    let duracionDescanso = 10; // segundos
+    let duracionRonda = parseInt(document.getElementById("inicio").value)*60; // segundos
+    let duracionDescanso = parseInt(document.getElementById("descanso").value)*60; // segundos
     let rondas = document.getElementById("rondas");
     let rondasNumero = 0;
     let temporizadorElemento = document.getElementById("temporizador");
 
 
     function iniciarTemporizador() {
+      duracionRonda = parseInt(document.getElementById("inicio").value)*60;
+      duracionDescanso = parseInt(document.getElementById("descanso").value)*60;
       reproducirSonidoInicio()
       rondas.style.color="red"
       temporizadorElemento.style.color="red"
@@ -106,7 +136,7 @@
             reproducirSonidoBeep()
           }
           if(tiempoRestante==-1){
-            detenerTemporizador()
+            clearInterval(temporizador);
             iniciarTemporizador()
           }
     
@@ -115,13 +145,17 @@
 
     function detenerTemporizador() {
       clearInterval(temporizador);
-      document.getElementById("temporizador").innerHTML = "0:00";
+      rondas.innerText="Rondas"
+      rondas.style.color="green"
+      rondasNumero=0
+      document.getElementById("temporizador").style.color="white";
+      document.getElementById("temporizador").innerHTML = "00:00";
     }
 
-    iniciarTemporizador();
+   
 
     function reproducirSonidoInicio() {
-      let audio = new Audio('inicio.mp3');
+      let audio = new Audio('dk.mp3');
       audio.play();
       setTimeout(function() {
         audio.pause();
@@ -138,6 +172,12 @@
       let audio = new Audio('beep.mp3');
         audio.play();
    
+    }
+    function iniciar() {
+      iniciarTemporizador()
+    }
+    function detener() {
+      detenerTemporizador()
     }
 
   </script>
