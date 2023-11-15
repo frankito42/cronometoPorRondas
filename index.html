@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Temporizador</title>
+  <style>
+    h1{
+      color: green;
+      font-size: 700%;
+      padding: 0;
+      margin: 0;
+    }
+    body {
+      background-color: black;
+    }
+
+    #temporizador {
+      font-size: 20em;
+    }
+
+    .afull {
+      color: red !important;
+    }
+    .descanso {
+      color: green !important;
+    }
+    .container{
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+  </style>
+</head>
+<body>
+
+    <div class="container">
+      <h1 id="rondas">asdasdasd</h1>
+      <div id="temporizador">00:00</div>
+      <div>
+        <input type="number" name="" id="">
+        <input type="number" name="" id="">
+      </div>
+    
+    <div>
+ 
+
+  <script>
+    let temporizador;
+    let duracionRonda = 20; // segundos
+    let duracionDescanso = 10; // segundos
+    let rondas = document.getElementById("rondas");
+    let rondasNumero = 0;
+    let temporizadorElemento = document.getElementById("temporizador");
+
+
+    function iniciarTemporizador() {
+      reproducirSonidoInicio()
+      rondas.style.color="red"
+      temporizadorElemento.style.color="red"
+      let tiempoRestante = duracionRonda;
+      rondasNumero ++
+      rondas.innerHTML = "Ronda "+rondasNumero
+      temporizador = setInterval(function() {
+        
+          let minutos = Math.floor(tiempoRestante / 60);
+          let segundos = tiempoRestante % 60;
+
+          if (segundos < 10) {
+            segundos = "0" + segundos;
+          }
+
+          temporizadorElemento.innerHTML = minutos + ":" + segundos;        
+
+          tiempoRestante--;
+          console.log(tiempoRestante)
+          if(tiempoRestante<5){
+            reproducirSonidoBeep()
+          }
+          if(tiempoRestante==-1){
+            detenerTemporizador()
+            iniciarTemporizadorDescanso()
+          }
+    
+      }, 1000);
+    }
+    function iniciarTemporizadorDescanso() {
+      reproducirSonidoDescanso()
+      rondas.style.color="green"
+      temporizadorElemento.style.color="green"
+      let tiempoRestante = duracionDescanso;
+      temporizador = setInterval(function() {
+        
+          let minutos = Math.floor(tiempoRestante / 60);
+          let segundos = tiempoRestante % 60;
+
+          if (segundos < 10) {
+            segundos = "0" + segundos;
+          }
+
+          temporizadorElemento.innerHTML = minutos + ":" + segundos;        
+
+          tiempoRestante--;
+          console.log(tiempoRestante)
+          if(tiempoRestante<5){
+            reproducirSonidoBeep()
+          }
+          if(tiempoRestante==-1){
+            detenerTemporizador()
+            iniciarTemporizador()
+          }
+    
+      }, 1000);
+    }
+
+    function detenerTemporizador() {
+      clearInterval(temporizador);
+      document.getElementById("temporizador").innerHTML = "0:00";
+    }
+
+    iniciarTemporizador();
+
+    function reproducirSonidoInicio() {
+      let audio = new Audio('inicio.mp3');
+      audio.play();
+      setTimeout(function() {
+        audio.pause();
+      }, 3000);
+    }
+    function reproducirSonidoDescanso() {
+      let audio = new Audio('descanso.mp3');
+      audio.play();
+      setTimeout(function() {
+        audio.pause();
+      }, 3000);
+    }
+    function reproducirSonidoBeep() {
+      let audio = new Audio('beep.mp3');
+        audio.play();
+   
+    }
+
+  </script>
+</body>
+</html>
