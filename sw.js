@@ -7,7 +7,8 @@ self.addEventListener('install', function(event) {
           'dk.mp3',
           'beep.mp3',
           'descanso.mp3',
-          'inicio.mp3'
+          'inicio.mp3',
+          'sw.js'
           // Agrega aquí los archivos que deseas almacenar en caché
         ]);
       })
